@@ -21,17 +21,14 @@ const corsOptions = {
   optionsSuccessStatus: 204,
 };
 
-app.use(cors(corsOptions));
-app.options('*', cors(corsOptions)); // Handle preflight requests
-
-// Set headers manually
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'https://muse-app-seven.vercel.app');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-  res.header('Access-Control-Allow-Credentials', 'true');
+  res.setHeader('Access-Control-Allow-Origin', 'https://muse-app-seven.vercel.app');
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   next();
 });
+app.options('*', cors(corsOptions));
 
 // Test endpoint
 app.get('/test-cors', (req, res) => {
@@ -42,9 +39,7 @@ app.get('/', (req, res) => {
   res.send('Hello world')
 })
 
-app.use(bodyParser.json());
 
-app.use(express.static('public'));
 app.use(morgan('dev'))
 app.use(express.urlencoded({ limit: '100mb', extended: true }))
 app.use(express.json({ limit: '100mb' }))
