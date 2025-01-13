@@ -30,14 +30,6 @@ app.use((req, res, next) => {
 });
 app.options('*', cors(corsOptions));
 
-// Test endpoint
-app.get('/test-cors', (req, res) => {
-  res.json({ message: 'CORS is working!' });
-});
-
-app.get('/', (req, res) => {
-  res.send('Hello world')
-})
 
 
 app.use(morgan('dev'))
@@ -58,6 +50,16 @@ const user = require('./routes/user')
 app.use('/api/v1/auth', auth)
 app.use('/api/v1/user', user)
 app.use('/api/v1/playlist', favoritTracks)
+
+// Test endpoint
+app.get('/test-cors', (req, res) => {
+  res.json({ message: 'CORS is working!' });
+});
+
+app.get('/', (req, res) => {
+  res.send('Hello world')
+})
+
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
