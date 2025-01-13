@@ -35,7 +35,9 @@ exports.googleAuth = async (req, res) => {
     picture: user.picture,
     name: name,
    }
-   res.status(200).json({ user: userData, token, message: 'User connected successfully' });
+   const loginToken = jwt.sign(userData, process.env.JWT_SECRET);
+
+   res.status(200).json({ user: userData, token:loginToken, message: 'User connected successfully' });
  } catch (error) {
    console.error("Error verifying Google token:", error);
    res.status(400).json({ error: "Invalid token" });
